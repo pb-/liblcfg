@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>liblcfg - lightweight configuration file library</title>
+    <link rel="stylesheet" type="text/css" href="lcfg.css" />
+  </head>
+  <body>
+  <div id="content">
+    <p id="backlink">Other <a href="http://carnivore.it">carnivore.it</a> projects include: {<a href="http://nepenthes.carnivore.it">nepenthes</a>,<a href="http://honeytrap.carnivore.it">honeytrap</a>,<a href="http://libemu.carnivore.it">libemu</a>}.carnivore.it</p>
+    <h1>liblcfg - lightweight configuration file library</h1>
+	<p>Welcome to the <em>liblcfg</em> website.</p>
+
+	<h2><a href="#about" id="about">About liblcfg</a></h2>
+	<p><em>liblcfg</em> is a lightweight configuration file library written in C99. The file format supports arbitrarily nested simple assignments, lists and maps (aka dictionaries).</p>
+
+	<h2><a href="#example-input" id="example-input">Example input file</a></h2>
+	<p>The following file is a simple example configuration file readable by <em>liblcfg</em>.</p>
+<pre>// simple assignment
+string-value = "foo"
+
+// list value assignment
+list_value = [ "a", "b", "c" ]
+
+// map value assignment
+map-value = {
+    foo = "bar"
+    bar = "foo"
+}
+
+binary_string = "\0\xff\r\n\0\0\x4a"
+
+/* deep nesting */
+nested-list = [[[["deep nesting"]]]]
+
+a = {
+    d = ["d", ["e","r"], "my index is 2"]
+}
+</pre>
+
+    <h2><a href="#download" id="download">Download</a></h2>
+	<p>The current version of <em>liblcfg</em> is <a href="files/liblcfg-0.2.0.tar.gz">0.2.0</a>.</p>
+
+	<h2><a href="#installing" id="installing">Installing liblcfg</a></h2>
+	<p>There are two ways to use <em>liblcfg</em> in your program. You can either link it as a shared object against your program or generate a pair of static source files to be included at compile-time.</p>
+
+	<h3>Installing liblcfg on your system</h3>
+	<p>By installing <em>liblcfg</em> on your system you can link your program against <em>liblcfg</em> dynamically. The standard autoconf steps are required for installation:</p>
+
+	<pre>./configure
+make
+make install # as root</pre>
+
+    <p>The installation includes the <tt>lcfg</tt> binary, which is a simple command line tool to query configuration files. Altough this is certainly the preferred installation method, it is probably unlikely that you want to install <em>liblcfg</em> system-wide and have it added as a dependency to your program. See next section for a static approach.</p>
+
+	<h3>Compiling liblcfg into your program</h3>
+	<p>By compiling <em>liblcfg</em> statically into your program you avoid any external dependency. The <em>liblcfg</em> distribution package contains a small shellscript named <tt>mksinglefile.sh</tt> which will create two files: <tt>lcfg_static.h</tt> and <tt>lcfg_static.c</tt>. After adding these files to your project and including the header you'll be able to use all <em>liblcfg</em> features.</p>
+
+	<h2><a href="#usage" id="usage">Usage example</a></h2>
+	<p>The following code shows some basic usage of <em>liblcfg</em> by printing all values of the specified configuration file to stdout. This file is also available in the <em>liblcfg</em> distribution package.</p>
+
+<pre>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+#include &lt;lcfg/lcfg.h&gt;
+
+enum lcfg_status example_visitor(const char *key, void *data, size_t len, void *user_data)
+{
+    int i;
+    char c;
+
+    printf("%s = \"", key);
+    for( i = 0; i &lt; len; i++ )
+    {
+        c = *((const char *)(data + i));
+        printf("%c", isprint(c) ? c : '.');
+    }
+    puts("\"");
+
+    return lcfg_status_ok;
+}
+
+
+int main(int argc, char **argv)
+{
+    if( argc != 2 )
+    {
+        printf("usage: %s FILE\n", argv[0]);
+        return -1;
+    }
+
+    struct lcfg *c = lcfg_new(argv[1]);
+    
+    if( lcfg_parse(c) != lcfg_status_ok )
+    {
+        printf("lcfg error: %s\n", lcfg_error_get(c));
+    }
+    else
+    {
+        lcfg_accept(c, example_visitor, 0);
+    }
+
+    lcfg_delete(c); 
+    
+    return 0;
+}
+</pre>
+
+	<h2><a href="#interface" id="interface">Interface description</a></h2>
+	<p>The <em>liblcfg</em> interface consists of a very small set of functions and types. All elements of <tt>lcfg.h</tt> are described here.</p>
+	<dl id="reference">
+	<dt><strong>struct</strong> lcfg</dt>
+	<dd>This structure represents a configuration file context. The storage size and elements are purposely unknown to the library user and may change between versions.</dd>
+	<dt><strong>enum</strong> lcfg_status</dt>
+	<dd>The lcfg_status enumeration contains several return codes used by various functions within liblcfg. Currently only lcfg_status_ok and lcfg_status_error are implemented.</dd>
+	<dt><strong>enum</strong> lcfg_status (*lcfg_visitor_function)(<strong>const char</strong> *<em>key</em>, <strong>void</strong> *<em>data</em>, <strong>size_t</strong> <em>size</em>, <strong>void</strong> *<em>user_data</em>)</dt>
+	<dd>The lcfg_visitor_function function-pointer typedef. This function is called for every configuration element identified by <em>key</em> with a value of length <em>size</em> pointed to by <em>data</em>. The <em>user_data</em> argument is set by the user upon the visit invocation. If this function does not return lcfg_status_ok the iteration is stopped prematurely and no further calls are made.</dd>
+	<dt><strong>struct</strong> lcfg *lcfg_new(<strong>const char</strong> *<em>filename</em>)</dt>
+	<dd>Creates a new configuration file context and returns a pointer to the newly created context.</dd>
+	<dt><strong>enum</strong> lcfg_status lcfg_parse(<strong>struct</strong> lcfg *<em>c</em>)</dt>
+	<dd>Parse the configuration file specified in the context pointed to by <em>c</em>. If any error is encountered the function returns lcfg_status_error and the error message is set accordingly. Otherwise lcfg_status_ok is returned.</dd>
+	<dt><strong>enum</strong> lcfg_status lcfg_accept(<strong>struct</strong> lcfg *<em>c</em>, lcfg_visitor_function <em>fn</em>, <strong>void</strong> *<em>user_data</em>)</dt>
+	<dd>Start iterating through all configuration key/value-pairs of <em>c</em> using the visitor function <em>fn</em>. The <em>user_data</em> value can be of any type and is passed along with every visitor call.</dd>
+	<dt><strong>enum</strong> lcfg_status lcfg_value_get(<strong>struct</strong> lcfg *<em>c</em>, <strong>const char</strong> *<em>key</em>, <strong>void</strong> **data, <strong>size_t</strong> *len)</dt>
+	<dd>Return the string-value located at path <em>key</em> by setting <em>data</em> and <em>len</em> of the value. Returns lcfg_status_error if the key was not found, lcfg_status_ok otherwise. Note that this function does only return string-values, if the value pointed to by <em>key</em> is not a string-value lcfg_status_error is returned.</dd>
+	<dt><strong>const char</strong> *lcfg_error_get(<strong>struct</strong> lcfg *<em>c</em>)</dt>
+	<dd>Return the last error message within context <em>c</em>.</dd>
+	<dt><strong>void</strong> lcfg_error_set(<strong>struct</strong> lcfg *<em>c</em>, <strong>const char</strong> *<em>fmt</em>, ...)</dt>
+	<dd>Set the error message for context <em>c</em>. A library user should not need this function.</dd>
+	<dt><strong>void</strong> lcfg_delete(<strong>struct</strong> lcfg *<em>c</em>)</dt>
+	<dd>Free the configuration context pointed to by <em>c</em>.</dd>
+	</dl>
+
+	<h2><a href="#interface" id="tree">Tree Interface</a></h2>
+	<p>By design, <em>liblcfg</em> does not store an explicit abstract syntax tree after parsing the file. Nonetheless you can still access the file through a tree structure by using <tt>lcfgx/lcfgx_tree.h</tt> which acts as a seperate layer on top of the regular interface. Please refer to this file for documentation (one struct and two functions only!).</p>
+
+	<h2>The <tt>lcfg</tt> utility</h2>
+	<p>The <em>liblcfg</em> package also includes a simple CLI tool <tt>lcfg</tt> to query a configuration file by keys. It is useful for processing configuration files in shell scripts etc. properly.</p>
+
+	<h2><a href="#license" id="license">License and author</a></h2>
+	<p><em>liblcfg</em> is licensed under the <acronym title="General Public License">GPL</acronym> version 2.0. <em>liblcfg</em> is &copy; 2007&ndash;2009 Paul Baecher. I can be reached at <img src="pb.png" style="border: 0; vertical-align: bottom; margin-bottom: 2px;" alt="Get a graphical browser." />.</p>
+    <div id="footer">
+	  <p id="revision"><small><em>$Id$</em></small></p>
+      <p>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+        src="http://www.w3.org/Icons/valid-xhtml11"
+        alt="Valid XHTML 1.1" height="31" width="88" /></a>
+      </p>
+    </div>
+  </div>
+  </body>
+</html>
