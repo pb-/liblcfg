@@ -154,6 +154,9 @@ void lcfgx_correct_type(struct lcfgx_tree_node *node)
 
 	if( node->type == lcfgx_map || node->type == lcfgx_list )
 		n = node->value.elements;
+	
+	if( n == NULL )
+		return;
 
 	/* child key is integer, we have a list */
 	char *end;
