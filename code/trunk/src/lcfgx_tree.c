@@ -93,7 +93,8 @@ static void lcfgx_tree_insert(int pathc, char **pathv, void *data, size_t len, s
 			/* not found, insert */
 			n = lcfgx_tree_node_new(lcfgx_string, pathv[0]);
 			n->value.string.len = len;
-			n->value.string.data = malloc(len);
+			n->value.string.data = malloc(len+1);
+			memset(n->value.string.data, 0, len+1);
 			memcpy(n->value.string.data, data, len);
 			n->next = node->value.elements;
 			node->value.elements = n;
