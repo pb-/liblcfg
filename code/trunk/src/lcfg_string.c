@@ -86,7 +86,7 @@ int lcfg_string_cat_uint(struct lcfg_string *s, unsigned int i)
 	unsigned int ii = i;
 	char c;
 
-	while( ii > 10 )
+	while( ii >= 10 )
 	{
 		size_needed++;
 		ii /= 10;
