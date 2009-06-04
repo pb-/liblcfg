@@ -49,6 +49,8 @@ AC_CHECK_HEADERS([stdint.h stdlib.h string.h strings.h unistd.h])
 AC_ARG_ENABLE(check, [  --enable-check      enable check unit testing],
 	[enable_check="$enableval"],[enable_check="no"])
 
+AM_CONDITIONAL(CHECK, test x$enable_check = "xyes")
+
 # check unit testing
 if test x$enable_check = "xyes" ; then
 	PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])

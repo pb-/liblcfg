@@ -2,7 +2,12 @@
 
 AUTOMAKE_OPTIONS = foreign
 
-SUBDIRS = src include tools tests
+SUBDIRS = src include tools
+
+if CHECK
+SUBDIRS += tests
+endif
+
 EXTRA_DIST = configure.ac mksinglefile.sh
 
 # noinst_SUBDIRS = test
