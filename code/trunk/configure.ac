@@ -46,6 +46,11 @@ AC_PROG_LIBTOOL
 
 AC_CHECK_HEADERS([stdint.h stdlib.h string.h strings.h unistd.h])
 
+
+# check unit testing
+PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
+AM_PROG_CC_C_O
+
 dnl   We ought not to have to worry about getopt.h, getopt{,1}.c,
 dnl   since they can always be unconditionally compiled and linked.  See
 dnl   http://mail.gnu.org/archive/html/autoconf/2000-12/msg00049.html
@@ -141,7 +146,8 @@ AC_CONFIG_FILES([Makefile
 		include/Makefile
 		include/lcfg/Makefile
 		include/lcfgx/Makefile
-		tools/Makefile])
+		tools/Makefile
+		tests/Makefile])
 
                  
 AC_OUTPUT
