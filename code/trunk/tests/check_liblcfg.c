@@ -33,7 +33,7 @@ struct conf_value
 	int visited;
 };
 
-enum lcfg_status test_visitor(const char *key, void *data, size_t len, void *user_data)
+static enum lcfg_status test_visitor(const char *key, void *data, size_t len, void *user_data)
 {
 	struct conf_value *ref;
 
@@ -58,7 +58,7 @@ enum lcfg_status test_visitor(const char *key, void *data, size_t len, void *use
 	return lcfg_status_error;
 }
 
-void test_missing(struct conf_value *ref)
+static void test_missing(struct conf_value *ref)
 {
 	struct conf_value *r;
 
@@ -90,7 +90,8 @@ START_TEST(test_example)
 	struct lcfg *c = lcfg_new("conf/example.conf");
 
 	fail_unless(c != NULL, NULL);
-	fail_unless(lcfg_parse(c) == lcfg_status_ok, lcfg_error_get(c));
+	fail_unless(lcfg_parse(c) == lcfg_status_ok,
+		"could not parse file: %s", lcfg_error_get(c));
 
 	fail_unless(lcfg_accept(c, test_visitor, example_conf) == lcfg_status_ok,
 		"visitor returned error: %s", lcfg_error_get(c));

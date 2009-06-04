@@ -1,12 +1,12 @@
 # -*- mode: m4; -*-
 # -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-# $Id: configure.ac 1445 2009-01-15 22:43:09Z dp $
+# $Id$
 
 AC_PREREQ(2.59)
-AC_INIT([liblcfg], [0.2.0], [pbaecher_remove_everything_after_the_first_underscore@gmail.com])
+AC_INIT([liblcfg], [0.2.0], [pbaecher_removeme@gmail.com])
 AM_INIT_AUTOMAKE([liblcfg], [0.2.0])
-AC_REVISION([$Id: configure.ac 1445 2009-01-15 22:43:09Z dp $])
+AC_REVISION([$Id$])
 
 AC_PREFIX_DEFAULT(/opt/liblcfg)
 AC_CONFIG_SRCDIR([include/lcfg/lcfg.h])
@@ -46,10 +46,14 @@ AC_PROG_LIBTOOL
 
 AC_CHECK_HEADERS([stdint.h stdlib.h string.h strings.h unistd.h])
 
+AC_ARG_ENABLE(check, [  --enable-check      enable check unit testing],
+	[enable_check="$enableval"],[enable_check="no"])
 
 # check unit testing
-PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
-AM_PROG_CC_C_O
+if test x$enable_check = "xyes" ; then
+	PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
+	AM_PROG_CC_C_O
+fi
 
 dnl   We ought not to have to worry about getopt.h, getopt{,1}.c,
 dnl   since they can always be unconditionally compiled and linked.  See
