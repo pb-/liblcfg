@@ -96,8 +96,17 @@ static void lcfgx_tree_insert(int pathc, char **pathv, void *data, size_t len, s
 			n->value.string.data = malloc(len+1);
 			memset(n->value.string.data, 0, len+1);
 			memcpy(n->value.string.data, data, len);
-			n->next = node->value.elements;
-			node->value.elements = n;
+			n->next = NULL;
+			if ( node->value.elements != NULL )
+			{
+				struct lcfgx_tree_node *end = node->value.elements;
+				while (end->next != NULL)
+					end = end->next;
+				end->next = n;
+			}else
+			{
+				node->value.elements = n;
+			}
 		}
 	}
 	else
@@ -108,8 +117,17 @@ static void lcfgx_tree_insert(int pathc, char **pathv, void *data, size_t len, s
 			/* not found, insert it */
 			n = lcfgx_tree_node_new(lcfgx_map, pathv[0]);
 			n->value.elements = NULL;
-			n->next = node->value.elements;
-			node->value.elements = n;
+			n->next = NULL;
+			if ( node->value.elements != NULL )
+			{
+				struct lcfgx_tree_node *end = node->value.elements;
+				while (end->next != NULL)
+					end = end->next;
+				end->next = n;
+			}else
+			{
+				node->value.elements = n;
+			}
 		}
 
 		/* recurse into map/list */
