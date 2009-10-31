@@ -8,6 +8,8 @@ if CHECK
 SUBDIRS += tests
 endif
 
+DIST_SUBDIRS = tests
+
 EXTRA_DIST = configure.ac mksinglefile.sh
 
 # noinst_SUBDIRS = test

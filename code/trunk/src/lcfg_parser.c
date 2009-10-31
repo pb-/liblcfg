@@ -277,6 +277,7 @@ static enum lcfg_status lcfg_parser_parse(struct lcfg_parser *p)
 	else
 	{
 		free(state_stack);
+		lcfg_error_set(p->lcfg, "%s", "unexpected end of file: unterminated list/map?");
 		return lcfg_status_error;
 	}
 }
