@@ -9,13 +9,12 @@
   <div id="content">
     <p id="backlink">Other <a href="http://carnivore.it">carnivore.it</a> projects include: {<a href="http://nepenthes.carnivore.it">nepenthes</a>,<a href="http://honeytrap.carnivore.it">honeytrap</a>,<a href="http://libemu.carnivore.it">libemu</a>}.carnivore.it</p>
     <h1>liblcfg - lightweight configuration file library</h1>
-	<p>Welcome to the <em>liblcfg</em> website.</p>
 
 	<h2><a href="#about" id="about">About liblcfg</a></h2>
 	<p><em>liblcfg</em> is a lightweight configuration file library written in C99. The file format supports arbitrarily nested simple assignments, lists and maps (aka dictionaries).</p>
 
 	<h2><a href="#example-input" id="example-input">Example input file</a></h2>
-	<p>The following file is a simple example configuration file readable by <em>liblcfg</em>.</p>
+	<p>The following file is a simple example configuration file <a href="#usage">readable</a> by <em>liblcfg</em>.</p>
 <pre>// simple assignment
 string-value = "foo"
 
@@ -38,8 +37,8 @@ a = {
 }
 </pre>
 
-    <h2><a href="#download" id="download">Download</a></h2>
-	<p>The current version of <em>liblcfg</em> is <a href="files/liblcfg-0.2.0.tar.gz">0.2.0</a>.</p>
+    <h2><a href="#download" id="download">Download &amp; Source</a></h2>
+	<p>The current download version of <em>liblcfg</em> is <a href="files/liblcfg-0.2.0.tar.gz">0.2.0</a>; <a href="https://svn.carnivore.it/liblcfg/code/trunk">subversion access</a> and <a href="http://svn.carnivore.it/browser/liblcfg/code/trunk">online browsing</a> is also available.</p>
 
 	<h2><a href="#installing" id="installing">Installing liblcfg</a></h2>
 	<p>There are two ways to use <em>liblcfg</em> in your program. You can either link it as a shared object against your program or generate a pair of static source files to be included at compile-time.</p>
@@ -135,10 +134,10 @@ int main(int argc, char **argv)
 	<p>By design, <em>liblcfg</em> does not store an explicit abstract syntax tree after parsing the file. Nonetheless you can still access the file through a tree structure by using <tt>lcfgx/lcfgx_tree.h</tt> which acts as a seperate layer on top of the regular interface. Please refer to this file for documentation (one struct and two functions only!).</p>
 
 	<h2>The <tt>lcfg</tt> utility</h2>
-	<p>The <em>liblcfg</em> package also includes a simple CLI tool <tt>lcfg</tt> to query a configuration file by keys. It is useful for processing configuration files in shell scripts etc. properly.</p>
+	<p>The <em>liblcfg</em> package also includes a simple CLI tool <tt>lcfg</tt> to query a configuration file by keys. It is useful for processing configuration files properly in shell scripts etc.</p>
 
 	<h2><a href="#license" id="license">License and author</a></h2>
-	<p><em>liblcfg</em> is licensed under the <acronym title="General Public License">GPL</acronym> version 2.0. <em>liblcfg</em> is &copy; 2007&ndash;2009 Paul Baecher. I can be reached at <img src="pb.png" style="border: 0; vertical-align: bottom; margin-bottom: 2px;" alt="Get a graphical browser." />.</p>
+	<p><em>liblcfg</em> is licensed under the <acronym title="General Public License">GPL</acronym> version 2.0. <em>liblcfg</em> is &copy; 2007&ndash;2010 Paul Baecher. I can be reached at <img src="pb.png" style="border: 0; vertical-align: bottom; margin-bottom: 2px;" alt="Get a graphical browser." />.</p>
     <div id="footer">
 	  <p id="revision"><small><em>$Id$</em></small></p>
       <p>
