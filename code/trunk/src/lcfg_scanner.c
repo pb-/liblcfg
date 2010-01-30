@@ -1,6 +1,6 @@
 /*
  * liblcfg - lightweight configuration file library
- * Copyright (c) 2007--2009  Paul Baecher
+ * Copyright (c) 2007--2010  Paul Baecher
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -262,6 +262,9 @@ static enum lcfg_status lcfg_scanner_token_read(struct lcfg_scanner *s)
 						break;
 					case '0':
 						lcfg_string_cat_char(s->prepared_token.string, '\0');
+						break;
+					case '\\':
+						lcfg_string_cat_char(s->prepared_token.string, '\\');
 						break;
 					case 'x':
 						state = esc_hex_exp_first;

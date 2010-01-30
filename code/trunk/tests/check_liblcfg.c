@@ -1,6 +1,6 @@
 /*
  * liblcfg - lightweight configuration file library
- * Copyright (c) 2007--2009  Paul Baecher
+ * Copyright (c) 2007--2010  Paul Baecher
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -79,6 +79,7 @@ START_TEST(test_example)
 		{"map-value.foo", "bar", 3, 0},
 		{"map-value.bar", "foo", 3, 0},
 		{"binary_string", "\0\xff\r\n\0\0\x4a", 7, 0},
+		{"winpath", "c:\\windows\\", 11, 0},
 		{"nested-list.0.0.0.0", "deep nesting", 12, 0},
 		{"a.d.0", "d", 1, 0},
 		{"a.d.1.0", "e", 1, 0},

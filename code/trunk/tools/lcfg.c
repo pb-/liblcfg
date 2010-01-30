@@ -1,6 +1,6 @@
 /*
  * liblcfg - lightweight configuration file library
- * Copyright (c) 2007--2009  Paul Baecher
+ * Copyright (c) 2007--2010  Paul Baecher
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ const char *help =
                    "Mandatory arguments to long options are mandatory for short options too.\n"
                    "  -k, --key=KEY              only read the (possibly binary) value of KEY\n"
                    "                               and print it unfiltered to stdout\n"
+                   "  -n, --newline              print a newline character (\\n) after KEY value\n"
                    "\n"
                    "SELINUX options:\n"
                    "\n"
@@ -102,6 +103,7 @@ int main(int argc, char **argv)
 
 	mode = lcfg_mode_visitor;
 	enum lcfgx_type type = lcfgx_string;
+	int print_nl = 0;
 
 
 	int c;
@@ -111,12 +113,13 @@ int main(int argc, char **argv)
 		int option_index = 0;
 		static struct option long_options[] =
 		{
+			{ "newline", no_argument, NULL, 'n'},
 			{ "key", required_argument, NULL, 'k'},
 			{ "help", no_argument, NULL, 'h'},
 			{ "version", no_argument, NULL, 'v'}
 		};
 
-		c = getopt_long (argc, argv, "k:tT:hv", long_options, &option_index);
+		c = getopt_long (argc, argv, "k:tT:hvn", long_options, &option_index);
 		if( c == -1 )
 			break;
 
@@ -131,8 +134,11 @@ int main(int argc, char **argv)
 				fprintf(stdout, help, argv[0]);
 				return 0;
 				break;
+			case 'n':
+				print_nl = 1;
+				break;
 			case 'v':
-				fprintf(stdout, "%s 7.06.%d (c) 2007 Paul Baecher\n", argv[0], get_revision());
+				fprintf(stdout, "%s 10.01.%d (c) 2007--2010 Paul Baecher\n", argv[0], get_revision());
 				return 0;
 				break;
 
@@ -210,6 +216,11 @@ int main(int argc, char **argv)
 						for( i = 0; i < len; i++ )
 						{
 							fprintf(stdout, "%c", *((char *)(data + i)));
+						}
+
+						if( print_nl )
+						{
+							fprintf(stdout, "%c", '\n');
 						}
 					}
 				}

@@ -1,6 +1,6 @@
 /*
  * liblcfg - lightweight configuration file library
- * Copyright (c) 2007--2009  Paul Baecher
+ * Copyright (c) 2007--2010  Paul Baecher
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
