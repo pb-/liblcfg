@@ -1,0 +1,18 @@
+Source: liblcfg
+Priority: extra
+Maintainer: Nepenthes Development Team <nepenthesdev@gmail.com>
+Build-Depends: debhelper (>= 7), autotools-dev
+Standards-Version: 3.8.3
+Section: libs
+Homepage: http://liblcfg.carnivore.it
+
+Package: liblcfg-dev
+Section: libdevel
+Architecture: any
+Depends: liblcfg (= ${binary:Version})
+Description: the liblcfg library development files
+
+Package: liblcfg
+Section: libs
+Architecture: any
+Description: the liblcfg library
