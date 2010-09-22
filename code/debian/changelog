@@ -1,0 +1,5 @@
+liblcfg (0.2.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- root <root@unknown>  Mon, 17 May 2010 21:16:57 +0200

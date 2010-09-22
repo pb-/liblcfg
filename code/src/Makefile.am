@@ -4,7 +4,7 @@ AUTOMAKE_OPTIONS = foreign
 
 AM_CFLAGS = -pipe -D _GNU_SOURCE -I../include -Werror -Wall -g --std=c99
 
-pkglib_LTLIBRARIES = liblcfg.la
+lib_LTLIBRARIES = liblcfg.la
 
 liblcfg_la_SOURCES = lcfg.c
 liblcfg_la_SOURCES += lcfg_parser.c
