@@ -8,7 +8,7 @@ if CHECK
 SUBDIRS += tests
 endif
 
-DIST_SUBDIRS = tests
+DIST_SUBDIRS = src include tools tests
 
 EXTRA_DIST = configure.ac mksinglefile.sh
 
