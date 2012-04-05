@@ -38,7 +38,7 @@ a = {
 </pre>
 
     <h2><a href="#download" id="download">Download &amp; Source</a></h2>
-	<p>The current download version of <em>liblcfg</em> is <a href="files/liblcfg-0.2.1.tar.gz">0.2.1</a>; <a href="http://git.carnivore.it/liblcfg.git">git access</a> and <a href="http://src.carnivore.it/liblcfg/tree/code">online browsing</a> is also available.</p>
+	<p>The current download version of <em>liblcfg</em> is <a href="files/liblcfg-0.2.2.tar.gz">0.2.2</a>; <a href="http://git.carnivore.it/liblcfg.git">git access</a> and <a href="http://src.carnivore.it/liblcfg/tree/code">online browsing</a> is also available.</p>
 
 	<h2><a href="#installing" id="installing">Installing liblcfg</a></h2>
 	<p>There are two ways to use <em>liblcfg</em> in your program. You can either link it as a shared object against your program or generate a pair of static source files to be included at compile-time.</p>
@@ -63,14 +63,12 @@ make install # as root</pre>
 
 #include &lt;lcfg/lcfg.h&gt;
 
-enum lcfg_status example_visitor(const char *key, void *data, size_t len, void *user_data)
-{
+enum lcfg_status example_visitor(const char *key, void *data, size_t len, void *user_data) {
     int i;
     char c;
 
     printf("%s = \"", key);
-    for( i = 0; i &lt; len; i++ )
-    {
+    for( i = 0; i &lt; len; i++ ) {
         c = *((const char *)(data + i));
         printf("%c", isprint(c) ? c : '.');
     }
@@ -80,22 +78,17 @@ enum lcfg_status example_visitor(const char *key, void *data, size_t len, void *
 }
 
 
-int main(int argc, char **argv)
-{
-    if( argc != 2 )
-    {
+int main(int argc, char **argv) {
+    if( argc != 2 ) {
         printf("usage: %s FILE\n", argv[0]);
         return -1;
     }
 
     struct lcfg *c = lcfg_new(argv[1]);
     
-    if( lcfg_parse(c) != lcfg_status_ok )
-    {
+    if( lcfg_parse(c) != lcfg_status_ok ) {
         printf("lcfg error: %s\n", lcfg_error_get(c));
-    }
-    else
-    {
+    } else {
         lcfg_accept(c, example_visitor, 0);
     }
 
@@ -137,7 +130,7 @@ int main(int argc, char **argv)
 	<p>The <em>liblcfg</em> package also includes a simple CLI tool <tt>lcfg</tt> to query a configuration file by keys. It is useful for processing configuration files properly in shell scripts etc.</p>
 
 	<h2><a href="#license" id="license">License and author</a></h2>
-	<p><em>liblcfg</em> is licensed under the <acronym title="General Public License">GPL</acronym> version 2.0. <em>liblcfg</em> is &copy; 2007&ndash;2010 Paul Baecher. I can be reached at <img src="pb.png" style="border: 0; vertical-align: bottom; margin-bottom: 2px;" alt="Get a graphical browser." />.</p>
+	<p><em>liblcfg</em> is licensed under the BSD license. <em>liblcfg</em> is &copy; 2007&ndash;2012 Paul Baecher. I can be reached at <img src="pb.png" style="border: 0; vertical-align: bottom; margin-bottom: 2px;" alt="Get a graphical browser." />.</p>
     <div id="footer">
       <p>
       <a href="http://validator.w3.org/check?uri=referer"><img
