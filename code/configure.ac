@@ -4,8 +4,8 @@
 # $Id$
 
 AC_PREREQ(2.59)
-AC_INIT([liblcfg], [0.2.1], [pbaecher_removeme@gmail.com])
-AM_INIT_AUTOMAKE([liblcfg], [0.2.1])
+AC_INIT([liblcfg], [0.2.2], [pbaecher_removeme@gmail.com])
+AM_INIT_AUTOMAKE([liblcfg], [0.2.2])
 AC_REVISION([$Id$])
 
 AC_PREFIX_DEFAULT(/opt/liblcfg)
