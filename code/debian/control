@@ -4,7 +4,7 @@ Maintainer: Nepenthes Development Team <nepenthesdev@gmail.com>
 Build-Depends: debhelper (>= 7), autotools-dev
 Standards-Version: 3.8.3
 Section: libs
-Homepage: http://liblcfg.carnivore.it
+Homepage: https://baecher.github.io/liblcfg
 
 Package: liblcfg-dev
 Section: libdevel

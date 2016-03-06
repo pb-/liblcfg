@@ -10,7 +10,7 @@ echo " * It is recommended that you update this file on a regular" >> $CFILE
 echo " * basis from the original liblcfg distribution package." >> $CFILE
 echo " *" >> $CFILE
 echo " * The most recent version of liblcfg is available at" >> $CFILE
-echo " *   <http://liblcfg.carnivore.it>" >> $CFILE
+echo " *   <https://baecher.github.io/liblcfg>" >> $CFILE
 echo " */" >> $CFILE
 
 cp $CFILE $HFILE
